@@ -1,0 +1,17 @@
+{
+  "name": "2.6-digitech-assessment",
+  "version": "1.0.0",
+  "description": "To install dependencies:",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.7",
+    "daisyui": "^5.0.38",
+    "micromatch": "^4.0.8",
+    "postcss-selector-parser": "^6.0.10",
+    "tailwindcss": "^4.1.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
