@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
-    <title>Document</title>
-</head>
-<body>
-    <h1 class="text-2xl p-10">Tailwind</h1>
-    <p class="text-lg p-10">This is a simple Tailwind CSS example.</p>
-    <button class="btn btn-primary m-10 text-green-500 not-dark:text-red-200">Button</button>
-    <div class="p-10">
-        <p class="text-green-700">This is a paragraph styled with Tailwind CSS.</p>
-    </div>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="text-2xl my-10">Enviromental Game</h1>
+<p class="text-lg mb-10">Download game here!</p>
+<button class="btn btn-accent text-blue-500 mb-10">Download</button>
+<p class="text-green-700 mb-10">This is a paragraph styled with Tailwind CSS.</p>
+
+{% endblock %}
