@@ -6,7 +6,7 @@
     <!-- <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet"> -->
      <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Enviroment Game Website</title>
+    <title>{% block title %}{% endblock %} | Enviroment Game Website</title> 
 </head>
 <body class="min-h-screen flex flex-col bg-base-100">
     <header>
