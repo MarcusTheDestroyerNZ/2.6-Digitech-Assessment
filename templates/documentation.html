@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="prose max-w-none">
+    <h1 class="text-3xl font-bold mb-8">Game Documentation</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+            <div class="card-body">
+                <h2 class="card-title">Project Overview</h2>
+                <p>A simple game about helping the environment, made for the AS91896 (2.7) assessment.</p>
+                <div class="badge badge-primary">Version 1.0</div>
+            </div>
+        </div>
+        
+        <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+            <div class="card-body">
+                <h2 class="card-title">Development Process</h2>
+                <ul class="list-disc list-inside">
+                    <li>Planning and ideas: April 2025</li>
+                    <li>Building the game: April–May 2025</li>
+                    <li>Testing: June 2025</li>
+                    <li>Writing up: June 2025</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl col-span-full hover:shadow-2xl transition-shadow duration-300">
+            <div class="card-body flex flex-col items-center">
+            <h2 class="card-title w-full text-center justify-center flex">Technologies Used</h2>
+            <div class="flex flex-wrap gap-2 justify-center mt-2">
+                <div class="badge badge-outline">Python</div>
+                <div class="badge badge-outline">JSON</div>
+                <div class="badge badge-outline">Pygame</div>
+            </div>
+            </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl col-span-full hover:shadow-2xl transition-shadow duration-300">
+            <div class="card-body">
+                <h2 class="card-title">Testing</h2>
+                <div class="overflow-x-auto">
+                    <table class="table table-zebra">
+                        <thead>
+                            <tr>
+                                <th>Test</th>
+                                <th>What should happen</th>
+                                <th>What actually happened</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Resource Generation</td>
+                                <td>Resources go up over time</td>
+                                <td>Works as expected</td>
+                                <td><div class="badge badge-success">PASS</div></td>
+                            </tr>
+                            <tr>
+                                <td>Upgrade System</td>
+                                <td>Unlocks new things</td>
+                                <td>Works as expected</td>
+                                <td><div class="badge badge-success">PASS</div></td>
+                            </tr>
+                            <tr>
+                                <td>Save/Load System</td>
+                                <td>Game remembers your progress</td>
+                                <td>Buildings, power, and research were saved</td>
+                                <td><div class="badge badge-success">PASS</div></td>
+                            </tr>
+                            <tr>
+                                <td>Research Unlocks</td>
+                                <td>Upgrades work and unlock others</td>
+                                <td>Effects applied and visuals updated</td>
+                                <td><div class="badge badge-success">PASS</div></td>
+                            </tr>
+                            <tr>
+                                <td>Building Placement</td>
+                                <td>Can’t build in wrong places</td>
+                                <td>Stops you and shows warning</td>
+                                <td><div class="badge badge-success">PASS</div></td>
+                            </tr>
+                            <tr>
+                                <td>Offline Rewards</td>
+                                <td>Gives resources for time away</td>
+                                <td>Correct rewards given</td>
+                                <td><div class="badge badge-success">PASS</div></td>
+                            </tr>
+                            <tr>
+                                <td>Auto-Repair</td>
+                                <td>Some buildings fix themselves</td>
+                                <td>Works if you have enough money</td>
+                                <td><div class="badge badge-success">PASS</div></td>
+                            </tr>
+                            <tr>
+                                <td>Pollution Tracking</td>
+                                <td>Pollution goes up with certain power</td>
+                                <td>Values change correctly</td>
+                                <td><div class="badge badge-success">PASS</div></td>
+                            </tr>
+                            <tr>
+                                <td>Error Handling</td>
+                                <td>Deals with broken save files</td>
+                                <td>Loads defaults without crashing</td>
+                                <td><div class="badge badge-success">PASS</div></td>
+                            </tr>
+                            <tr>
+                                <td>Destroy Mode</td>
+                                <td>Removes buildings and gives back part of the cost</td>
+                                <td>Works correctly</td>
+                                <td><div class="badge badge-success">PASS</div></td>
+                            </tr>
+                            <tr>
+                                <td>Zoom & Pan Limits</td>
+                                <td>Doesn’t break the screen layout</td>
+                                <td>Everything works at all zoom levels</td>
+                                <td><div class="badge badge-success">PASS</div></td>
+                            </tr>
+                            <tr>
+                                <td>Buying New Land</td>
+                                <td>Unlocks tiles after payment</td>
+                                <td>Tiles became buildable</td>
+                                <td><div class="badge badge-success">PASS</div></td>
+                            </tr>
+                            <tr>
+                                <td>Sound Effects</td>
+                                <td>Plays sounds when building/repairing</td>
+                                <td>Correct sounds played</td>
+                                <td><div class="badge badge-success">PASS</div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl col-span-full hover:shadow-2xl transition-shadow duration-300">
+            <div class="card-body">
+                <h2 class="card-title">Design Choices</h2>
+                <ul class="list-disc list-inside">
+                    <li>Clicker-style game makes it fun and addictive</li>
+                    <li>Environment theme helps match the assessment goals</li>
+                    <li>Game gets harder over time to keep it interesting</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl col-span-full hover:shadow-2xl transition-shadow duration-300">
+            <div class="card-body">
+                <h2 class="card-title">Technical Features</h2>
+                <ul class="list-disc list-inside">
+                    <li>Used dictionaries to handle upgrades, timers, and resources easily.</li>
+                    <li>Built a research tree with costs, unlocks, and visuals that connect upgrades.</li>
+                    <li>Saved and loaded game progress with JSON to keep track of everything.</li>
+                    <li>Split code into different files for things like messages, locking, and UI to stay organised.</li>
+                    <li>Used functions like <code>update_power()</code> and <code>idle_reward()</code> to keep the code tidy and reusable.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl col-span-full hover:shadow-2xl transition-shadow duration-300">
+            <div class="card-body">
+                <h2 class="card-title">Structure and Reuse</h2>
+                <p>I used functions to avoid repeating the same code. For example, power, research, and drawing on the screen are each handled in their own parts.</p>
+                <p>Key things like <code>research_upgrades</code> and <code>building_stats</code> made the game easier to manage and grow.</p>
+                <p>The game's code is built in layers. The main loop uses other functions to handle everything, like <code>update_power()</code> managing timers, repairs, and limits all at once. This keeps things neat and makes it easier to change or fix stuff.</p>
+                <p>Game logic (how things work) is separate from UI (how things look), which makes it easier to test and update parts without breaking others.</p>
+            </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl col-span-full hover:shadow-2xl transition-shadow duration-300">
+            <div class="card-body">
+                <h2 class="card-title">Reflection and Problem Solving</h2>
+                <p>While building the game, I ran into some issues and fixed them by testing and trying different things:</p>
+                <ul class="list-disc list-inside">
+                    <li><strong>Offline rewards:</strong> I made sure the game couldn't be tricked by changing the clock. If it sees a future time, it resets the reward timer.</li>
+                    <li><strong>Research tree:</strong> It was hard to keep the lines between upgrades in the right place, so I used special data setups and zoom scaling to fix it.</li>
+                    <li><strong>Broken save files:</strong> Sometimes the save was empty or half-done. I used try/except to stop it crashing and start a new save if needed.</li>
+                    <li><strong>Balancing:</strong> Some upgrades were way too strong. I wrote a testing script to see how much they gave over time, then fixed the numbers.</li>
+                </ul>
+                <p>Through all this, I learned how useful it is to reuse code, make backups, and test things in small chunks before adding them to the main project.</p>
+            </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl col-span-full hover:shadow-2xl transition-shadow duration-300">
+            <div class="card-body">
+                <h2 class="card-title">Future Improvements</h2>
+                <div class="alert alert-info">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>Things I want to add or improve later:</span>
+                </div>
+                <ul class="list-disc list-inside mt-4">
+                    <li>Achievements</li>
+                    <li>Better and more detailed environment stats</li>
+                    <li>Rebirthing</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

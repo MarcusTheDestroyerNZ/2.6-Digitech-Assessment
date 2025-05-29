@@ -8,32 +8,30 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Enviroment Game Website</title>
 </head>
-<body>
+<body class="min-h-screen flex flex-col bg-base-100">
     <header>
-        <div class="navbar bg-base-100 shadow-sm">
+        <div class="navbar bg-primary text-primary-content shadow-lg">
             <div class="flex-1">
-                <a class="btn btn-ghost text-xl">Enviromental Game</a>
+                <a href="{{ url_for('index') }}" class="text-xl px-5 font-bold">Environmental Game</a>
             </div>
             <div class="flex-none">
                 <ul class="menu menu-horizontal px-5">
-                    <li><a>Home</a></li>
-                    <li>
-                        <details>
-                            <summary>Sub Pages</summary>
-                            <ul class="bg-base-100 rounded-t-none p-1">
-                                <li><a>Download</a></li>
-                                <li><a>About the Game</a></li>
-                                <li><a>Documentation</a></li>
-                            </ul>
-                        </details>
-                    </li>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('download') }}">Download</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('documentation') }}">Documentation</a></li>
                 </ul>
             </div>
         </div>
     </header>
-    <main class="container mx-auto my-6 grow">
+    <main class="container mx-auto px-4 py-8 flex-grow">
         {% block content %}
         {% endblock %}
     </main>
+    <footer class="footer footer-center p-4 bg-primary text-primary-content text-3xl">
+        <div>
+            <p>Footer</p>
+        </div>
+    </footer>
 </body>
 </html>

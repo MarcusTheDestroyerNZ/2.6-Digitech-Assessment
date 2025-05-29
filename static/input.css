@@ -4,7 +4,7 @@
 @plugin "daisyui/theme" {
   name: "retro";
   default: false;
-  prefersdark: true;
+  prefersdark: false;
   color-scheme: "light";
   --color-base-100: oklch(91.637% 0.034 90.515);
   --color-base-200: oklch(88.272% 0.049 91.774);

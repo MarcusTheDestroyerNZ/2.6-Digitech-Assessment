@@ -1,10 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="hero min-h-[500px] bg-base-200 rounded-lg">
+    <div class="hero-content text-center">
+        <div class="max-w-md">
+            <h1 class="text-5xl font-bold">Save the Environment!</h1>
+            <p class="py-6">Join the fight against climate change in this engaging idle game. Make sustainable choices and watch your impact grow!</p>
+            <a href="{{ url_for('download') }}" class="btn btn-primary">Play Now</a>
+        </div>
+    </div>
+</div>
 
-<h1 class="text-2xl my-10">Enviromental Game</h1>
-<p class="text-lg mb-10">Download game here!</p>
-<button class="btn btn-accent text-blue-500 mb-10">Download</button>
-<p class="text-green-700 mb-10">This is a paragraph styled with Tailwind CSS.</p>
-
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+            <h2 class="card-title">Engaging Gameplay</h2>
+            <p>Make strategic decisions to help the environment while your resources grow automatically.</p>
+        </div>
+    </div>
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+            <h2 class="card-title">Educational</h2>
+            <p>Learn about environmental impact and sustainability while having fun!</p>
+        </div>
+    </div>
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+            <h2 class="card-title">Free to Play</h2>
+            <p>Download and start making a difference today - no cost required!</p>
+        </div>
+    </div>
+</div>
 {% endblock %}
