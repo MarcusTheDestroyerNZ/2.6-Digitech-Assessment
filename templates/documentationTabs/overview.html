@@ -1,0 +1,71 @@
+<input type="radio" name="my_tabs_1" class="tab" aria-label="Overview" checked="checked" />
+        <div class="tab-content bg-base-100 border-base-300 p-6 rounded-b-lg">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300 col-span-full">
+                    <div class="card-body items-center">
+                        <h2 class="card-title">Project Overview</h2>
+                        <p>A simple game about helping the environment, made for the AS91896 (2.7) assessment.</p>
+                        <div class="badge badge-primary">Version 1.0</div>
+                    </div>
+                </div>
+
+                <div class="card bg-base-100 shadow-xl col-span-full hover:shadow-2xl transition-shadow duration-300">
+                    <div class="card-body">
+                        <h2 class="card-title">Structure and Reuse</h2>
+                        <p>I used functions to avoid repeating the same code. For example, power, research, and drawing on the screen are each handled in their own parts.</p>
+                        <p>Key things like <code>research_upgrades()</code> and <code>building_stats()</code> made the game easier to manage and grow.</p>
+                        <p>The game's code is built in layers. The main loop uses other functions to handle everything, like <code>update_power()</code> managing timers, repairs, and limits all at once. This keeps things neat and makes it easier to change or fix stuff.</p>
+                        <p>Game logic (how things work) is separate from UI (how things look), which makes it easier to test and update parts without breaking others.</p>
+                    </div>
+                </div>
+
+                <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                    <div class="card-body">
+                        <h2 class="card-title">Design Choices</h2>
+                        <ul class="list-disc list-inside">
+                            <li>Clicker-style game makes it fun and addictive</li>
+                            <li>Environment theme helps match the assessment goals</li>
+                            <li>Game gets harder over time to keep it interesting</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                    <div class="card-body">
+                        <h2 class="card-title">Technical Features</h2>
+                        <ul class="list-disc list-inside">
+                            <li>Used dictionaries to handle upgrades, timers, and resources easily.</li>
+                            <li>Built a research tree with costs, unlocks, and visuals that connect upgrades.</li>
+                            <li>Saved and loaded game progress with JSON to keep track of everything.</li>
+                            <li>Split code into different files for things like messages, locking, and UI to stay organised.</li>
+                            <li>Used functions like <code>update_power()</code> and <code>idle_reward()</code> to keep the code tidy and reusable.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card bg-base-100 shadow-xl col-span-full hover:shadow-2xl transition-shadow duration-300">
+                    <div class="card-body">
+                        <h2 class="card-title">Reflection and Problem Solving</h2>
+                        <p>While building the game, I ran into some issues and fixed them by testing and trying different things:</p>
+                        <ul class="list-disc list-inside">
+                            <li><strong>Offline rewards:</strong> I made sure the game couldn't be tricked by changing the clock. If it sees a future time, it resets the reward timer.</li>
+                            <li><strong>Research tree:</strong> It was hard to keep the lines between upgrades in the right place, so I used special data setups and zoom scaling to fix it.</li>
+                            <li><strong>Broken save files:</strong> Sometimes the save was empty or half-done. I used try/except to stop it crashing and start a new save if needed.</li>
+                            <li><strong>Balancing:</strong> Some upgrades were way too strong. I wrote a testing script to see how much they gave over time, then fixed the numbers.</li>
+                        </ul>
+                        <p>Through all this, I learned how useful it is to reuse code, make backups, and test things in small chunks before adding them to the main project.</p>
+                    </div>
+                </div>
+
+                <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300 col-span-full">
+                    <div class="card-body">
+                        <h2 class="card-title">Future Improvements</h2>
+                        <ul class="list-disc list-inside mt-4">
+                            <li>Achievements</li>
+                            <li>Better and more detailed environment stats</li>
+                            <li>Rebirthing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
