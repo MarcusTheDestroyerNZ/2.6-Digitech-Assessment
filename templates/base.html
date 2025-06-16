@@ -10,7 +10,9 @@
 </head>
 <body class="min-h-screen flex flex-col bg-base-100">
     <header>
-        <div class="navbar bg-primary text-primary-content shadow-lg">
+        {% include "navbar.html" %}       
+        
+        <!-- <div class="navbar bg-primary text-primary-content shadow-lg">
             <div class="flex-1">
                 <a href="{{ url_for('index') }}" class="text-xl px-5 font-bold">Environmental Game</a>
             </div>
@@ -22,7 +24,7 @@
                     <li><a href="{{ url_for('documentation') }}">Documentation</a></li>
                 </ul>
             </div>
-        </div>
+        </div> -->
     </header>
     <main class="container mx-auto px-4 py-8 flex-grow">
         {% block content %}
