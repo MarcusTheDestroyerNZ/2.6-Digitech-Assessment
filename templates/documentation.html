@@ -6,15 +6,34 @@
 <div class="prose max-w-none">
     <h1 class="text-3xl font-bold mb-8">Game Documentation</h1>
     <div class="tabs tabs-lift flex">
-        <!-- Overview Tab -->
         {% include "documentationTabs/overview.html" %}
-        <!-- Sprint Tracking Tab -->
+
         {% include "documentationTabs/sprintTracking.html" %}
-        <!-- System Architecture Tab -->
+
         {% include "documentationTabs/systemArchitecture.html" %}
-        <!-- Testing Tab -->
+
         {% include "documentationTabs/testing.html" %}
     </div>
 </div>
+
+<script>
+    function switchTab() {
+        // get the hash from URL
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+            // find the tabs input with matching ID
+            const tabInput = document.getElementById(hash);
+            if (tabInput) {
+                tabInput.checked = true;
+            }
+        }
+    }
+
+    // switch tab on page load
+    document.addEventListener('DOMContentLoaded', switchTab);
+
+    // switch tab when hash thing changes
+    window.addEventListener('hashchange', switchTab);
+</script>
 
 {% endblock %}
