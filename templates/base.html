@@ -10,21 +10,7 @@
 </head>
 <body class="min-h-screen flex flex-col bg-base-100">
     <header>
-        {% include "navbar.html" %}       
-        
-        <!-- <div class="navbar bg-primary text-primary-content shadow-lg">
-            <div class="flex-1">
-                <a href="{{ url_for('index') }}" class="text-xl px-5 font-bold">Environmental Game</a>
-            </div>
-            <div class="flex-none">
-                <ul class="menu menu-horizontal px-5">
-                    <li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('download') }}">Download</a></li>
-                    <li><a href="{{ url_for('about') }}">About</a></li>
-                    <li><a href="{{ url_for('documentation') }}">Documentation</a></li>
-                </ul>
-            </div>
-        </div> -->
+        {% include "navbar.html" %}
     </header>
     <main class="container mx-auto px-4 py-8 flex-grow">
         {% block content %}

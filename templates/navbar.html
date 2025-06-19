@@ -1,30 +1,10 @@
 <div class="navbar bg-primary text-primary-content shadow-sm">
     <div class="navbar-start">
-        <a class="btn btn-ghost text-xl">Enviromental Game</a>
-    </div>
-    <div class="navbar-end">
-        <ul class="menu menu-horizontal px-1">
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li><a href="{{ url_for('download') }}">Download</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-            <li>
-                <details>
-                    <summary href="{{ url_for('documentation') }}">Documentation</summary>
-                    <ul class="p-2">
-                        <li><a href="{{ url_for('documentation') }}">Overview</a></li>
-                        <li><a href="{{ url_for('documentation') }}">Sprint Tracking</a></li>
-                        <li><a href="{{ url_for('documentation') }}">System Architecture</a></li>
-                        <li><a href="{{ url_for('documentation') }}">Testing</a></li>
-                    </ul>
-                </details>
-            </li>
-        </ul>
-
-        <div class="dropdown">
+        <div class="dropdown dropdown-start">
             <div tabindex="0" role="button" class="btn btn-ghost md:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
             </div>
-            <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+            <ul tabindex="0" class="menu menu-sm text-black dark:text-white dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow">
                 <li><a>Home</a></li>
                 <li><a>Download</a></li>
                 <li><a>About</a></li>
@@ -39,5 +19,25 @@
                 </li>
             </ul>
         </div>
+        <a class="menu menu-horizontal text-xl font-bold btn-ghost" href="{{ url_for('index') }}">Enviromental Game</a>
+    </div>
+    
+    <div class="navbar-end">
+        <ul class="menu menu-horizontal px-1 md:flex hidden">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('download') }}">Download</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li>
+                <details>
+                    <summary href="{{ url_for('documentation') }}">Documentation</summary>
+                    <ul class="p-2 text-black dark:text-white">
+                        <li><a href="{{ url_for('documentation') }}">Overview</a></li>
+                        <li><a href="{{ url_for('documentation') }}">Sprint Tracking</a></li>
+                        <li><a href="{{ url_for('documentation') }}">System Architecture</a></li>
+                        <li><a href="{{ url_for('documentation') }}">Testing</a></li>
+                    </ul>
+                </details>
+            </li>
+        </ul>
     </div>
 </div>
