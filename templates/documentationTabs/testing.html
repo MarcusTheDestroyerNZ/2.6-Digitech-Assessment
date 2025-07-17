@@ -3,17 +3,42 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div class="card bg-base-100 shadow-xl col-span-full card-border border-base-300 hover:shadow-2xl transition-shadow duration-300">
             <div class="card-body">
-                <h2 class="card-title">Testing</h2>
-                <ul class="list-disc list-inside mt-4">
-                    <li>Manual playtesting for all features</li>
-                    <li>Tested save/load with different data</li>
-                    <li>Checked for edge cases (e.g., negative resources, invalid upgrades)</li>
-                </ul>
-                <div class="alert alert-info mt-4">
-                    <span>Need to add screenshots</span>
+                <h2 class="card-title">Iteration/Error Log</h2>
+                    <div class="overflow-x-auto">
+                    <table class="table table-zebra">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Error/Issue</th>
+                                <th>How I fixed it</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>22/03</td>
+                                <td>The Research tree back button was not positioned correctly when resizing the screen.</td>
+                                <td>I made the button move with the screen size.</td>
+                                <td><div class="badge badge-success">Working</div></td>
+                            </tr>
+                            <tr>
+                                <td>23/03</td>
+                                <td>Scolling and right clicking also counted as clicking in the gui.</td>
+                                <td>I added an if statement checking for mouse button 1 (left click)</td>
+                                <td><div class="badge badge-success">Working</div></td>
+                            </tr>
+                            <tr>
+                                <td>27/03</td>
+                                <td>Game crashed with FileNotFoundError if playerData.json did not exist.</td>
+                                <td>Added a check to create a new save file with default data if none was found.</td>
+                                <td><div class="badge badge-success">Working</div></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+
         <div class="card bg-base-100 shadow-xl col-span-full card-border border-base-300 hover:shadow-2xl transition-shadow duration-300">
             <div class="card-body">
                 <h2 class="card-title">Test Cases</h2>
