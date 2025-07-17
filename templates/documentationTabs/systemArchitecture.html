@@ -16,7 +16,7 @@
             <div class="card-body">
                 <h2 class="card-title">Screenshots and explaining my code</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="mockup-code w-full">
+                    <div class="mockup-code w-full max-h-100 overflow-y-auto">
                         <pre><code>
 {% include "documentationTabs/codeSnippets/savePlayerData.txt" %}
                         </code></pre>
@@ -25,26 +25,101 @@
                         <div class="card-body">
                             <h2 class="card-title">Explaination</h2>
                             <div>
-                                In this code I have a function called <code>save_player_data()</code> that saves the player's data into a JSON file. 
-                                <br>
-                                This saves all important player information, such as money, research, power, upgrades, and the state of the game world (like placed blocks and unlocked areas) into a file for loading next time the game is opened. 
-                                <br>
-                                It writes this data to <code>playerData.json</code> using the <code>json.dump()</code>.
-                                <br>
-                                I use the <code>now.strftime()</code> method to get the current date and time when the player logs out, which is also saved in the JSON file. I use this to track when the player last played the game, giving offline progress when they return.
+                                In this function, <code>save_player_data()</code>, I use dictionaries to organize all the different pieces of information about the player and the game. 
+                                Dictionaries are helpful because they let me group related data together using key-value pairs, making it easy to store things like upgrades, placed buildings, and unlocked areas in a clear and structured way. 
+                                Once all the data is collected in a big dictionary, I use <code>json.dump()</code> to write it to a file called <code>playerData.json</code>. 
+                                Using <code>json.dump()</code> saves the data in a format that is easy for both humans and computers to read, and makes it simple to load everything back into the game later. 
+                                This approach keeps the save system organized and reliable.
                             </div>
                         </div>
                     </div>
 
-                    <div class="mockup-code w-full">
+                    <div class="mockup-code w-full max-h-100 overflow-y-auto">
                         <pre><code>
+{% include "documentationTabs/codeSnippets/loadPlayerData.txt" %}
                         </code></pre>
                     </div>
                     <div class="card bg-base-100 shadow-xl card-border border-base-300">
                         <div class="card-body">
                             <h2 class="card-title">Explaination</h2>
                             <div>
+                                In this function, <code>load_player_data()</code>, I use <code>json.load()</code> to read all the saved player and game information from the <code>playerData.json</code> file. 
+                                The data is stored as dictionaries, which makes it easy to look up and update things like the player’s stats, upgrades, placed buildings, and unlocked areas. 
+                                I use the <code>get()</code> method on these dictionaries to safely get each value, so if something is missing, the game can still work. 
+                                The function also loops through upgrades to make sure their effects are applied, puts all the buildings and power plants back in the right places, and figures out how long the player was away for idle rewards. 
+                                Using dictionaries and <code>json.load()</code> makes it simple and reliable to restore the game exactly as the player left it.
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="mockup-code w-full max-h-100 overflow-y-auto">
+                        <pre><code>
+{% include "documentationTabs/codeSnippets/idleReward.txt" %}
+                        </code></pre>
+                    </div>
+                    <div class="card bg-base-100 shadow-xl card-border border-base-300">
+                        <div class="card-body">
+                            <h2 class="card-title">Explaination</h2>
+                            <div>
+                                In this function, <code>idle_reward()</code>, I calculate and give the player rewards for the time they were away from the game. 
+                                I use loops to go through all the player’s buildings and figure out how much power, money, and research they would have earned while offline. 
+                                I check if power plants need repairs and, if auto-repair is enabled and there’s enough money, I fix them automatically so they keep working. 
+                                I also make sure research labs keep earning research even if there’s no power. 
+                                At the end, I add the earned money and research to the player’s totals and show a message telling them how long they were away and what they earned. 
+                                This makes the game more fun by letting players make progress even when they’re not playing.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mockup-code w-full max-h-100 overflow-y-auto">
+                        <pre><code>
+{% include "documentationTabs/codeSnippets/renderResearchTree.txt" %}
+                        </code></pre>
+                    </div>
+                    <div class="card bg-base-100 shadow-xl card-border border-base-300">
+                        <div class="card-body">
+                            <h2 class="card-title">Explaination</h2>
+                            <div>
+                                In this function, <code>render_research_tree()</code>, I draw the research tree screen for the game. 
+                                I use loops to go through all the research nodes and their connections, drawing lines between upgrades to show which ones unlock others. 
+                                For each upgrade, I draw a button with its name, cost, and image, and I make the button look different if the player can afford it, has already bought it or is locked. 
+                                I also display the player’s current research points and money at the top of the screen. 
+                                This approach makes the research tree easy to understand and interact with, helping players see their progress and what they can unlock next.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mockup-code w-full max-h-100 overflow-y-auto">
+                        <pre><code>
+{% include "documentationTabs/codeSnippets/renderTooltip.txt" %}
+                        </code></pre>
+                    </div>
+                    <div class="card bg-base-100 shadow-xl card-border border-base-300">
+                        <div class="card-body">
+                            <h2 class="card-title">Explaination</h2>
+                            <div>
+                                In this function, <code>render_tooltip()</code>, I create and display a tooltip that gives information about a building when the player hovers over it. 
+                                I use if-else statements to check what type of building it is and add different lines of text to the tooltip, like how much power or research it produces, its cost, sell price, and status. 
+                                I use different colors for each line to make the information easy to read. I also calculate the size of the tooltip based on the text, and draw a semi-transparent background so it stands out on the screen. 
+                                This makes it easy for players to quickly see important details about buildings in the game.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mockup-code w-full max-h-100 overflow-y-auto">
+                        <pre><code>
+{% include "documentationTabs/codeSnippets/canPlaceBuilding.txt" %}
+                        </code></pre>
+                    </div>
+                    <div class="card bg-base-100 shadow-xl card-border border-base-300">
+                        <div class="card-body">
+                            <h2 class="card-title">Explaination</h2>
+                            <div>
+                                In this function, <code>can_place_building()</code>, I check if a building can be placed at a certain spot on the game grid. 
+                                First, I make sure the spot is inside the map by checking the x and y values. 
+                                Then, I look at the tile data to see if the spot is empty (represented by a 0). 
+                                If it is, the function returns <code>True</code>, meaning the player can place a building there. Otherwise, it returns <code>False</code>. 
+                                This helps make sure buildings can only be placed in valid, empty spots on the map.
                             </div>
                         </div>
                     </div>

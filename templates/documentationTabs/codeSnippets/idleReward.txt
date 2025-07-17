@@ -1,0 +1,126 @@
+    def idle_reward():
+        global money, research, money_ps, research_ps, idle_seconds, power, placed_power_plant_ticks
+
+        ticks_passed = int(idle_seconds)
+        offline_money = 0
+        offline_research = 0
+        offline_power = 0
+
+        # First calculate total power generation for this tick
+        for (grid_x, grid_y), block_image in list(placed_blocks.items()):
+            building_name = building_mapping[block_image]
+
+            if building_name in power_plant_ticks:
+                current_ticks = placed_power_plant_ticks.get((grid_x, grid_y), 0)
+                building_max_ticks = power_plant_ticks[building_name]
+
+                if current_ticks > 0:
+                    productive_seconds = min(current_ticks, ticks_passed)
+                    if building_name in power_per_second:
+                        offline_power += (
+                            power_per_second[building_name]
+                            * productive_seconds
+                            * offline_percentage
+                        )
+
+                    remaining_ticks = max(0, current_ticks - ticks_passed)
+                    placed_power_plant_ticks[(grid_x, grid_y)] = remaining_ticks
+
+                    # Handle auto-repairs
+                    if remaining_ticks == 0:
+                        auto_repair_enabled = (
+                            (
+                                building_name == "wind_turbine"
+                                and auto_repair_buildings("wind_turbine")
+                            )
+                            or (
+                                building_name == "solar_panel"
+                                and auto_repair_buildings("solar_panel")
+                            )
+                            or (
+                                building_name == "coal_plant"
+                                and auto_repair_buildings("coal_plant")
+                            )
+                            or (
+                                building_name == "nuclear_plant"
+                                and auto_repair_buildings("nuclear_plant")
+                            )
+                            or (
+                                building_name == "fusion_plant"
+                                and auto_repair_buildings("fusion_plant")
+                            )
+                        )
+
+                        if auto_repair_enabled:
+                            remaining_time = ticks_passed - productive_seconds
+                            if remaining_time > 0:
+                                repairs_needed = remaining_time // building_max_ticks
+                                repair_cost = (
+                                    building_prices[building_name] * repair_cost_percentage
+                                )
+                                total_repair_cost = repair_cost * repairs_needed
+
+                                if (
+                                    offline_money >= total_repair_cost
+                                    and repairs_needed > 0
+                                ):
+                                    offline_money -= total_repair_cost
+                                    complete_cycles = repairs_needed * building_max_ticks
+                                    offline_power += (
+                                        power_per_second[building_name]
+                                        * complete_cycles
+                                        * offline_percentage
+                                    )
+
+                                    final_ticks = building_max_ticks - (
+                                        remaining_time % building_max_ticks
+                                    )
+                                    placed_power_plant_ticks[(grid_x, grid_y)] = final_ticks
+                                elif money >= total_repair_cost and repairs_needed > 0:
+                                    money -= total_repair_cost
+                                    complete_cycles = repairs_needed * building_max_ticks
+                                    offline_power += (
+                                        power_per_second[building_name]
+                                        * complete_cycles
+                                        * offline_percentage
+                                    )
+
+                                    final_ticks = building_max_ticks - (
+                                        remaining_time % building_max_ticks
+                                    )
+                                    placed_power_plant_ticks[(grid_x, grid_y)] = final_ticks
+
+            # Handle labs (these work independently of power)
+            elif building_name in research_per_second:
+                earned = (
+                    research_per_second[building_name] * ticks_passed * offline_percentage
+                )
+                offline_research += earned
+
+        # Now process houses after we know how much power was generated
+        required_power = 0
+        for (grid_x, grid_y), block_image in placed_blocks.items():
+            building_name = building_mapping[block_image]
+            if building_name in money_per_second:
+                required_power += money_per_second[building_name]
+
+        # Convert available power to money through houses
+        if offline_power >= required_power:
+            offline_money += required_power * ticks_passed * offline_percentage
+        else:
+            offline_money += offline_power * ticks_passed * offline_percentage
+
+        money += offline_money
+        research += offline_research
+        # Format idle time into days, hours, minutes, or seconds
+        if idle_seconds >= 86400:
+            idle_time_str = f"{int(idle_seconds // 86400)} days"
+        elif idle_seconds >= 3600:
+            idle_time_str = f"{int(idle_seconds // 3600)} hours"
+        elif idle_seconds >= 60:
+            idle_time_str = f"{int(idle_seconds // 60)} minutes"
+        else:
+            idle_time_str = f"{int(idle_seconds)} seconds"
+
+        message = f"You were away for {idle_time_str} and earned ${format_number(offline_money)} and {format_number(offline_research)} research points while away!" 
+        notifications.create_popup("Welcome Back!", message)

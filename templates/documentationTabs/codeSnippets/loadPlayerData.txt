@@ -1,0 +1,70 @@
+    def load_player_data():
+        global money, research, power, max_power, placed_blocks, placed_power_plant_ticks, idle_seconds, money_ps, research_ps  
+        try:
+            with open("playerData.json", "r") as f:
+                player_data = json.load(f)
+                if not player_data:
+                    print("Empty save file detected. Starting a new game.")
+                    return
+
+                # First load the basic variables
+                money = player_data.get("money", money)
+                research = player_data.get("research", research)
+                power = player_data.get("power", power)
+                max_power = player_data.get("max_power", max_power)
+                money_ps = player_data.get("money_ps", money_ps)
+                research_ps = player_data.get("research_ps", research_ps)
+
+                # Apply research upgrades first to ensure correct building stats
+                for upgrade in research_upgrades:
+                    upgrade["purchased"] = player_data.get("upgrades", {}).get(
+                        upgrade["name"], upgrade["purchased"]
+                    )
+                    if upgrade["purchased"]:
+                        upgrade["effect"]()
+
+                # Then load the placed buildings
+                saved_blocks = player_data.get("placed_blocks", {})
+                placed_blocks.clear()  # Clear existing blocks
+
+                for pos_str, building_name in saved_blocks.items():
+                    try:
+                        # Convert string coordinates to tuple
+                        grid_x, grid_y = map(int, pos_str.split(","))
+                        # Find the corresponding image
+                        for img, name in building_mapping.items():
+                            if name == building_name:
+                                placed_blocks[(grid_x, grid_y)] = img
+                                break
+                    except Exception as e:
+                        print(f"Error loading building at {pos_str}: {e}")
+
+                # Load power plant ticks after buildings are placed
+                saved_ticks = player_data.get("placed_power_plant_ticks", {})
+                placed_power_plant_ticks.clear()  # Clear existing ticks
+
+                for pos_str, ticks in saved_ticks.items():
+                    try:
+                        grid_x, grid_y = map(int, pos_str.split(","))
+                        placed_power_plant_ticks[(grid_x, grid_y)] = ticks
+                    except Exception as e:
+                        print(f"Error loading ticks at {pos_str}: {e}")
+
+                # Calculate idle time after everything else is loaded
+                time_logged_out = player_data.get(
+                    "time_logged_out", now.strftime("%d-%m-%Y %H:%M:%S")
+                )
+                idle_seconds = calculate_time_difference(
+                    time_logged_out, now.strftime("%d-%m-%Y %H:%M:%S")
+                )
+
+                # Load unlocked areas last
+                unlocked_areas = player_data.get("unlocked_areas", {})
+                for region_name, unlocked in unlocked_areas.items():
+                    if region_name in locked_tiles.locked_tiles:
+                        locked_tiles.locked_tiles[region_name]["locked"] = not unlocked
+
+                print(f"Successfully loaded save file with {len(placed_blocks)} buildings")
+                idle_reward()
+
+                update_max_power()

@@ -1,0 +1,5 @@
+    def can_place_building(grid_x, grid_y):
+        if 0 <= grid_x < tilemap.width and 0 <= grid_y < tilemap.height:
+            gid_layer2 = tilemap.layers[1].data[grid_y][grid_x]
+            return gid_layer2 == 0
+        return False

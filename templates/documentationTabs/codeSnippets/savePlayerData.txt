@@ -8,7 +8,7 @@
             "money_ps": money_ps,
             "research_ps": research_ps,
             "upgrades": {
-                upgrade["name"]: upgrade["purchased"] for upgrade in research_upgrades
+                upgrade["name"]: upgrade["purchased"] for upgrade in research_upgrades  
             },
             "placed_blocks": {
                 f"{grid_x},{grid_y}": building_mapping[block_image]

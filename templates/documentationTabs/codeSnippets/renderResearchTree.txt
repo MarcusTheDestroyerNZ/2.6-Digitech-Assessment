@@ -1,0 +1,223 @@
+    def render_research_tree():
+        global back_button_rect
+        screen.fill((50, 50, 50))
+
+        # Draw connections between nodes
+        for i in range(len(tree_layout)):
+            for node in tree_layout[i]:
+                for unlock_name in node["unlocks"]:
+                    # Find the target node in subsequent rows
+                    for j in range(i + 1, len(tree_layout)):
+                        for next_node in tree_layout[j]:
+                            if next_node["name"] == unlock_name:
+                                # Check if the target node is purchased
+                                upgrade = next(
+                                    (
+                                        u
+                                        for u in research_upgrades
+                                        if u["name"] == next_node["name"]
+                                    ),
+                                    None,
+                                )
+                                if upgrade:
+                                    prerequisites_met = all(
+                                        prereq["purchased"]
+                                        for prereq in research_upgrades
+                                        if prereq["name"]
+                                        in [
+                                            n["name"]
+                                            for t in tree_layout
+                                            for n in t
+                                            if next_node["name"] in n["unlocks"]
+                                        ]
+                                    )
+                                    if upgrade["purchased"]:
+                                        line_color = (0, 100, 250)  
+                                    elif prerequisites_met:
+                                        line_color = (
+                                            0,
+                                            200,
+                                            0,
+                                        )  
+                                    else:
+                                        line_color = (125, 50, 50) 
+
+                                    # Calculate the start and end points of the line
+                                    start_x = (
+                                        node["x"] * research_tree_zoom
+                                        + research_tree_offset_x
+                                        + (300 * research_tree_zoom)
+                                    )  # right side of the left node
+                                    start_y = (
+                                        node["y"] * research_tree_zoom
+                                        + research_tree_offset_y
+                                        + (100 * research_tree_zoom) / 2
+                                    )  # Middle of the left node
+
+                                    end_x = (
+                                        next_node["x"] * research_tree_zoom
+                                        + research_tree_offset_x
+                                    )  # left side of the right node
+                                    end_y = (
+                                        next_node["y"] * research_tree_zoom
+                                        + research_tree_offset_y
+                                        + (100 * research_tree_zoom) / 2
+                                    )  # Middle of the right node
+
+                                    # Draw the line
+                                    pygame.draw.line(
+                                        screen,
+                                        line_color,
+                                        (start_x, start_y),
+                                        (end_x, end_y),
+                                        3,
+                                    )
+
+        # Draw research nodes with images, names, and prices
+        for tier in tree_layout:
+            for node in tier:
+                upgrade = next(
+                    (u for u in research_upgrades if u["name"] == node["name"]), None
+                )
+                if upgrade:
+                    # Check if all prerequisites are purchased
+                    prerequisites_met = all(
+                        prereq["purchased"]
+                        for prereq in research_upgrades
+                        if prereq["name"]
+                        in [
+                            n["name"]
+                            for t in tree_layout
+                            for n in t
+                            if node["name"] in n["unlocks"]
+                        ]
+                    )
+                    affordable = (
+                        money >= upgrade["cost"]
+                        if upgrade["currency"] == "money"
+                        else research >= upgrade["cost"]
+                    )
+                    if upgrade["purchased"]:
+                        button_color = (0, 100, 250)  
+                    elif affordable and prerequisites_met:
+                        button_color = (0, 200, 0)  
+                    else:
+                        button_color = (115, 100, 100)  
+
+                    button_rect = pygame.Rect(
+                        node["x"] * research_tree_zoom + research_tree_offset_x,
+                        node["y"] * research_tree_zoom + research_tree_offset_y,
+                        300 * research_tree_zoom,
+                        100 * research_tree_zoom, 
+                    )
+                    corner_radius = int(
+                        min(300 * research_tree_zoom, 100 * research_tree_zoom) // 6.4
+                    )
+                    pygame.draw.rect(screen, button_color, button_rect, 0, corner_radius)
+                    pygame.draw.rect(screen, (255, 255, 255), button_rect, 1, corner_radius)
+
+                    # Assign the button_rect to the upgrade dictionary
+                    upgrade["button_rect"] = button_rect
+
+                    # Draw the corresponding image on the left
+                    if "image" in node:
+                        scaled_image = pygame.transform.scale(
+                            node["image"],
+                            (int(80 * research_tree_zoom), int(80 * research_tree_zoom)),
+                        )
+                        screen.blit(
+                            scaled_image,
+                            (
+                                node["x"] * research_tree_zoom + 4 + research_tree_offset_x,
+                                node["y"] * research_tree_zoom + 4 + research_tree_offset_y,
+                            ),
+                        )
+
+                    name_font_size = int((300 * research_tree_zoom) / 100)
+                    cost_font_size = int((300 * research_tree_zoom) / 50)
+
+                    # Display the name and cost on the right
+                    upgrade_name = node["name"]
+                    words = upgrade_name.split()
+                    if len(upgrade_name) > 10 and len(words) > 1:
+                        # Split at the halfway point of the words
+                        split_index = len(words) // 2
+                        line1 = " ".join(words[:split_index])
+                        line2 = " ".join(words[split_index:])
+                        render_text(
+                            line1,
+                            name_font_size,
+                            (255, 255, 255),
+                            (
+                                node["x"] * research_tree_zoom
+                                + 100 * research_tree_zoom
+                                + research_tree_offset_x,
+                                node["y"] * research_tree_zoom
+                                + 10 * research_tree_zoom
+                                + research_tree_offset_y,
+                            ),
+                        )
+                        render_text(
+                            line2,
+                            name_font_size,
+                            (255, 255, 255),
+                            (
+                                node["x"] * research_tree_zoom
+                                + 100 * research_tree_zoom
+                                + research_tree_offset_x,
+                                node["y"] * research_tree_zoom
+                                + 35 * research_tree_zoom
+                                + research_tree_offset_y,
+                            ),
+                        )
+                    else:
+                        render_text(
+                            upgrade_name,
+                            name_font_size,
+                            (255, 255, 255),
+                            (
+                                node["x"] * research_tree_zoom
+                                + 100 * research_tree_zoom
+                                + research_tree_offset_x,
+                                node["y"] * research_tree_zoom
+                                + 20 * research_tree_zoom
+                                + research_tree_offset_y,
+                            ),
+                        )
+
+                    render_text(
+                        f"Cost: {'$' if upgrade['currency'] == 'money' else ''} {format_number(upgrade['cost'])} {'RP' if upgrade['currency'] == 'research' else ''}",  
+                        cost_font_size,
+                        (255, 255, 255),
+                        (
+                            node["x"] * research_tree_zoom
+                            + 100 * research_tree_zoom
+                            + research_tree_offset_x,
+                            node["y"] * research_tree_zoom
+                            + 60 * research_tree_zoom
+                            + research_tree_offset_y,
+                        ),
+                    )
+                else:
+                    node["button_rect"] = None
+
+        # Draw a semi-transparent header background
+        header_surface = pygame.Surface((new_screen_width, 200), pygame.SRCALPHA)
+        header_surface.fill((30, 30, 30, 200))
+        screen.blit(header_surface, (0, 0))
+
+        # Render title, back button, and resource displays
+        render_text("Research Tree", 43, (255, 255, 255), (new_screen_width // 2 - 150, 50))
+        back_button_rect = render_text(
+            "< Back",
+            15,
+            (255, 255, 255),
+            (new_screen_width - (new_screen_width / 1.1), 45),
+            True,
+            (100, 40),
+            (100, 100, 100),
+        )
+        render_text(
+            f"Research Points: {format_number(research)} RP", 15, (255, 255, 255), (20, 140)
+        )
+        render_text(f"Money: ${format_number(money)}", 15, (255, 255, 255), (20, 160))

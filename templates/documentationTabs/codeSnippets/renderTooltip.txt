@@ -1,0 +1,122 @@
+    def render_tooltip(building, position, ticks_left=None, show_cost=False, additional_lines=None):
+        font = pygame.font.Font(None, 21)
+        lines = []
+
+        COLOR_TITLE = (255, 255, 255)
+        COLOR_ACTION = (255, 0, 255)
+        COLOR_POWER = (255, 255, 0)
+        COLOR_MONEY = (0, 255, 0)
+        COLOR_SELL = (255, 0, 0)
+        COLOR_STATUS_GOOD = (0, 255, 0)
+        COLOR_STATUS_BAD = (255, 0, 0)
+        COLOR_STATUS_WARN = (255, 255, 0)
+        COLOR_CAPACITY = (255, 255, 0)
+        COLOR_RESEARCH = (0, 200, 255)
+
+        if building in locked_tiles.locked_tiles:
+            lines.append((building, COLOR_TITLE))
+            lines.append(("Unlockable Region", COLOR_ACTION))
+        elif building in research_per_second:
+            formatted_name = format_building_name(building)
+            lines.append((formatted_name, COLOR_TITLE))
+            lines.append(("Produces Research:", COLOR_ACTION))
+            lines.append(
+                (f"{format_number(research_per_second[building])} RP/s", COLOR_RESEARCH)
+            )
+            if show_cost:
+                cost_color = (
+                    COLOR_MONEY if money >= building_prices[building] else COLOR_SELL
+                )
+                lines.append(
+                    (f"Cost: ${format_number(building_prices[building])}", cost_color)
+                )
+            sell_price = int(building_prices[building] * sell_percentage)
+            lines.append((f"Sell Price: ${format_number(sell_price)}", COLOR_SELL))
+        elif building in money_per_second:
+            formatted_name = format_building_name(building)
+            lines.append((formatted_name, COLOR_TITLE))
+            lines.append(("Converts Power to Money:", COLOR_ACTION))
+            lines.append((f"{format_number(money_per_second[building])} MW/s", COLOR_POWER))    
+            if show_cost:
+                cost_color = (
+                    COLOR_MONEY if money >= building_prices[building] else COLOR_SELL
+                )
+                lines.append(
+                    (f"Cost: ${format_number(building_prices[building])}", cost_color)
+                )
+            sell_price = int(building_prices[building] * sell_percentage)
+            lines.append((f"Sell Price: ${format_number(sell_price)}", COLOR_SELL))
+        elif building in battery_capacity:
+            formatted_name = format_building_name(building)
+            lines.append((formatted_name, COLOR_TITLE))
+            lines.append(("Stores Power:", COLOR_ACTION))
+            lines.append(
+                (f"{format_number(battery_capacity[building])} MW", COLOR_CAPACITY)
+            )
+            if show_cost:
+                cost_color = (
+                    COLOR_MONEY if money >= building_prices[building] else COLOR_SELL
+                )
+                lines.append(
+                    (f"Cost: ${format_number(building_prices[building])}", cost_color)
+                )
+            sell_price = int(building_prices[building] * sell_percentage)
+            lines.append((f"Sell Price: ${format_number(sell_price)}", COLOR_SELL))
+        elif building in power_per_second:
+            formatted_name = format_building_name(building)
+            lines.append((formatted_name, COLOR_TITLE))
+            lines.append(("Produces Power:", COLOR_ACTION))
+            lines.append((f"{format_number(power_per_second[building])} MW/s", COLOR_POWER))    
+            if ticks_left is not None:
+                if ticks_left <= 0:
+                    lines.append(("Status: Broken", COLOR_STATUS_BAD))
+                    repair_cost = round(
+                        building_prices[building] * repair_cost_percentage, 2
+                    )
+                    lines.append(
+                        (f"Repair Cost: ${format_number(repair_cost)}", COLOR_STATUS_WARN)
+                    )
+                else:
+                    lines.append(("Status: Operational", COLOR_STATUS_GOOD))
+            if show_cost:
+                cost_color = (
+                    COLOR_MONEY if money >= building_prices[building] else COLOR_SELL
+                )
+                lines.append(
+                    (f"Cost: ${format_number(building_prices[building])}", cost_color)
+                )
+            if ticks_left is not None:
+                lines.append(
+                    (
+                        f"Ticks Left: {ticks_left} / {power_plant_ticks[building]}",
+                        COLOR_ACTION,
+                    )
+                )
+            sell_price = int(building_prices[building] * sell_percentage)
+            lines.append((f"Sell Price: ${format_number(sell_price)}", COLOR_SELL))
+
+        # Add additional lines if provided
+        if additional_lines:
+            lines.extend(additional_lines)
+
+        # Render each line and calculate the tooltip size
+        rendered_lines = [font.render(line[0], True, line[1]) for line in lines]
+        line_height = font.get_linesize() + 5  # Add extra spacing between lines
+        tooltip_width = max(line.get_width() for line in rendered_lines) + 10
+        tooltip_height = len(rendered_lines) * line_height + 10
+
+        # Create a transparent surface for the tooltip background
+        tooltip_surface = pygame.Surface((tooltip_width, tooltip_height), pygame.SRCALPHA)
+        pygame.draw.rect(
+            tooltip_surface,
+            (20, 20, 20, 200),
+            (0, 0, tooltip_width, tooltip_height),
+            border_radius=7,
+        )
+
+        # Draw the background
+        screen.blit(tooltip_surface, position)
+
+        # Draw each line of text
+        for i, line_surface in enumerate(rendered_lines):
+            screen.blit(line_surface, (position[0] + 5, position[1] + 5 + i * line_height))
