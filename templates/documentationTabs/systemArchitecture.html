@@ -15,37 +15,10 @@
         <div class="card bg-base-100 shadow-xl col-span-full card-border border-base-300 hover:shadow-2xl transition-shadow duration-300">
             <div class="card-body">
                 <h2 class="card-title">Screenshots and explaining my code</h2>
-                <div class="flex flex-row gap-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="mockup-code w-full">
                         <pre><code>
-    def save_player_data():
-        print(now.strftime("%d-%m-%Y %H:%M:%S")),
-        player_data = {
-            "time_logged_out": now.strftime("%d-%m-%Y %H:%M:%S"),
-            "money": money,
-            "research": research,
-            "power": power,
-            "max_power": max_power,
-            "money_ps": money_ps,
-            "research_ps": research_ps,
-            "upgrades": {
-                upgrade["name"]: upgrade["purchased"] for upgrade in research_upgrades
-            },
-            "placed_blocks": {
-                f"{grid_x},{grid_y}": building_mapping[block_image]
-                for (grid_x, grid_y), block_image in placed_blocks.items()
-            },
-            "placed_power_plant_ticks": {
-                f"{grid_x},{grid_y}": ticks
-                for (grid_x, grid_y), ticks in placed_power_plant_ticks.items()
-            },
-            "unlocked_areas": {
-                region_name: not region_data["locked"]
-                for region_name, region_data in locked_tiles.locked_tiles.items()
-            },
-        }
-        with open("playerData.json", "w") as f:
-            json.dump(player_data, f, indent=4)
+{% include "documentationTabs/codeSnippets/savePlayerData.txt" %}
                         </code></pre>
                     </div>
                     <div class="card bg-base-100 shadow-xl card-border border-base-300">
@@ -59,6 +32,19 @@
                                 It writes this data to <code>playerData.json</code> using the <code>json.dump()</code>.
                                 <br>
                                 I use the <code>now.strftime()</code> method to get the current date and time when the player logs out, which is also saved in the JSON file. I use this to track when the player last played the game, giving offline progress when they return.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mockup-code w-full">
+                        <pre><code>
+                        </code></pre>
+                    </div>
+                    <div class="card bg-base-100 shadow-xl card-border border-base-300">
+                        <div class="card-body">
+                            <h2 class="card-title">Explaination</h2>
+                            <div>
+
                             </div>
                         </div>
                     </div>
